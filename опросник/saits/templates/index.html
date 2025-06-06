@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опросник с результатами</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            animation: colorChange 10s infinite;
+        }
+        @keyframes colorChange {
+    0% { background-color: white; }
+    100% { background-color: whitesmoke; }
+}
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: whitesmoke;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: rgb(255, 251, 251);
+            border-radius: 3px;
+            border-left: 3px solid blue;
+        }
+
+        .options {
+            margin-top: 10px;
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .options label:hover {
+            background-color: #f0f0f0;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 30px auto 0;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .percentage-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            text-align: center;
+            z-index: 1000;
+            display: none;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .percentage-value {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+
+        .popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .popup-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .close-btn {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .restart-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .close-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .restart-btn:hover {
+            background-color: #27ae60;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Опрос</h1>
+        <form id="surveyForm">
+            <div class="question">
+                <h3>1. Какой командой создается новая ветка в Git</h3>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="q1" value="git branch -m" required>
+                        git branch -m
+                    </label>
+                    <label>
+                       <input type="radio" name="q1" value="git init branch" required>
+                        git init branch
+                    </label>
+                    <label>
+                        <input type="radio" name="q1" value="git checkout -b" required>
+                        git checkout -b
+                    </label>
+                    <label>
+                        <input type="radio" name="q1" value="git branch">
+                        git branch
+                    </label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>2. Какой самый популярный язык программирования</h3>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="q2" value="java" required>
+                        java
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="python">
+                        python
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="java script">
+                        java script
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="c++">
+                        c++
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="c#">
+                        c#
+                    </label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>3. Какой командой собрать Docker-образ</h3>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="q3" value="docker run" required>
+                        docker run
+                    </label>
+                    <label>
+                        <input type="radio" name="q3" value="docker create">
+                        docker create
+                    </label>
+                    <label>
+                        <input type="radio" name="q3" value="docker build">
+                        docker build
+                    </label>
+                    <label>
+                        <input type="radio" name="q3" value="docker compose">
+                        docker compose
+                    </label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>4. Какой HTTP-метод используется для создание новых данных на сервере?</h3>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="q4" value="GET" required>
+                        GET
+                    </label>
+                    <label>
+                        <input type="radio" name="q4" value="PATCH">
+                        PATCH
+                    </label>
+                    <label>
+                        <input type="radio" name="q4" value="POST">
+                        POST
+                    </label>
+                    <label>
+                        <input type="radio" name="q4" value="DELETE">
+                        DELETE
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Завершить опрос</button>
+        </form>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="percentage-popup" id="percentagePopup">
+        <h2>Ваш результат:</h2>
+        <div class="percentage-value" id="percentageValue">0%</div>
+        <div class="popup-buttons">
+            <button class="popup-btn restart-btn" onclick="restartSurvey()">Пройти ещё раз</button>
+            <button class="popup-btn close-btn" onclick="closePopup()">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            q1: "git branch",
+            q2: "python",
+            q3: "docker build",
+            q4: "POST"
+        };
+
+        function showPercentage(percentage) {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('percentagePopup').style.display = 'block';
+            document.getElementById('percentageValue').textContent = percentage + '%';
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('percentagePopup').style.display = 'none';
+        }
+
+        function restartSurvey() {
+            document.getElementById('surveyForm').reset();
+            closePopup();
+        }
+
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const answers = {};
+            let correctCount = 0;
+
+            for (let [key, value] of formData.entries()) {
+                answers[key] = value;
+                if (correctAnswers[key] === value) {
+                    correctCount++;
+                }
+            }
+
+            const totalQuestions = Object.keys(correctAnswers).length;
+            const percentage = Math.round((correctCount / totalQuestions) * 100);
+
+            showPercentage(percentage);
+        });
+    </script>
+</body>
+</html>
